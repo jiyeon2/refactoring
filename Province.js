@@ -1,3 +1,4 @@
+import { Producer } from './Producer.js'
 export class Province {
   constructor(doc) { // json 데이터
     this._name = doc.name;
@@ -18,7 +19,7 @@ export class Province {
   get totalProduction() { return this._totalProduction; }
   set totalProduction(arg) { this._totalProduction = arg; }
   get demand() { return this._demand; }
-  set demand(arg) { this._demand = arg; }
+  set demand(arg) { this._demand = parseInt(arg); }
   get price() { return this._price; }
   set price(arg) { this._price = parseInt(arg); }
 
@@ -65,24 +66,3 @@ export function sampleProvinceData() {
   };
 }
 
-export class Producer {
-  constructor(aProvince, data){
-    this._province = aProvince;
-    this._cost = data.cost;
-    this._name = data.name;
-    this._production = data.production || 0;
-  }
-
-  get name() { return this._name; }
-  get cost() { return this._cost; }
-  set cost(arg) { this._cost = parseInt(arg); }
-
-
-  get production() { return this._production; }
-  set production(amountStr) {
-    const amount = parseInt(amountStr);
-    const newProduction = Number.isNaN(amount) ? 0 : amount;
-    this._province.totalProduction += newProduction - this._production;
-    this._production = newProduction;
-  }
-}
